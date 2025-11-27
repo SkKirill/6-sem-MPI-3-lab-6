@@ -38,11 +38,11 @@ int main(int argc, char** argv) {
 	vector<int> local_array(n); // создаем вектор, размером n
 	vector<int> result(n); // и вектор с будущими резуальтатом, размером n
 
-	srand(time(NULL) + rank); // Используем разные seed для каждого процесса
+	srand(time(NULL) + rank);
 
 	for (int i = 0; i < n; i++) { // Заполняем массив случайными числами
 		local_array[i] = rand() % 10 - 3;
-		result[i] = 0; // все элементы результирующего вектора инициализируются нулями.
+		result[i] = 0; // все элементы результирующего вектора инициализируются нулями
 	}
 
 	for (int y : local_array) { // выводим полученный массив, для визуализации созданных данных
@@ -51,8 +51,8 @@ int main(int argc, char** argv) {
 	cout << endl;
 
 
-	MPI_Op max_sum_op; // моя MPI функция будет в этой переменной
-	MPI_Op_create((MPI_User_function*)max_sum, 1, &max_sum_op); //создание пользовательской функции, при помощи преобраования max_even в функцию MPI
+	MPI_Op max_sum_op;
+	MPI_Op_create((MPI_User_function*)max_sum, 1, &max_sum_op); // создание пользовательской функции, при помощи преобраования max_even в функцию MPI
 
 
 	MPI_Reduce(local_array.data(), result.data(), n, MPI_INT, max_sum_op, 0, MPI_COMM_WORLD);
